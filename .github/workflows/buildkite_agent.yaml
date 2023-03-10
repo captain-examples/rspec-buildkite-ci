@@ -9,10 +9,10 @@ jobs:
       BUILDKITE_AGENT_TOKEN: ${{ secrets.BUILDKITE_AGENT_TOKEN }}
       BUILDKITE_SSH_KEY: ${{ secrets.BUILDKITE_SSH_KEY }}
     steps:
-      - uses: actions/checkout@v3
       - uses: ruby/setup-ruby@v1
+        id: install-ruby
         with:
-          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+          ruby-version: "3.1.2"
       - name: Install Buildkite agent
         run: |
           curl -fsSL https://keys.openpgp.org/vks/v1/by-fingerprint/32A37959C2FA5C3C99EFBC32A79206696452D198 | sudo gpg --dearmor -o /usr/share/keyrings/buildkite-agent-archive-keyring.gpg
@@ -33,7 +33,7 @@ jobs:
           sudo tee /etc/buildkite-agent/hooks/environment > /dev/null <<'EOF'
           #!/usr/bin/env bash
           export RWX_ACCESS_TOKEN="${{ secrets.RWX_ACCESS_TOKEN }}"
-          export PATH=/opt/hostedtoolcache/Ruby/3.1.2/x64/bin/:$PATH
+          export PATH="${{ steps.install-ruby.outputs.ruby-prefix }}/bin:$PATH"
           EOF
           sudo chmod +x /etc/buildkite-agent/hooks/environment
       - name: Sleep
