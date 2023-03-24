@@ -13,7 +13,6 @@ jobs:
         run: |
           curl -fsSL https://get.docker.com -o get-docker.sh
           sudo sh get-docker.sh
-          dockerd-rootless-setuptool.sh install
       - name: Install Buildkite agent
         run: |
           curl -fsSL https://keys.openpgp.org/vks/v1/by-fingerprint/32A37959C2FA5C3C99EFBC32A79206696452D198 | sudo gpg --dearmor -o /usr/share/keyrings/buildkite-agent-archive-keyring.gpg
@@ -21,6 +20,8 @@ jobs:
           sudo apt-get update && sudo apt-get install -y buildkite-agent
           sudo sed -i "s/xxx/$BUILDKITE_AGENT_TOKEN/g" /etc/buildkite-agent/buildkite-agent.cfg
           sudo systemctl enable buildkite-agent && sudo systemctl start buildkite-agent
+      - name: give Buildkite permissions to use docker
+        run: sudo usermod -aG docker buildkite-agent
       - name: Configure Buildkite SSH
         run: |
           sudo mkdir /var/lib/buildkite-agent/.ssh
