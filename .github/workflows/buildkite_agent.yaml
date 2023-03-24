@@ -9,6 +9,11 @@ jobs:
       BUILDKITE_AGENT_TOKEN: ${{ secrets.BUILDKITE_AGENT_TOKEN }}
       BUILDKITE_SSH_KEY: ${{ secrets.BUILDKITE_SSH_KEY }}
     steps:
+      - name: Install docker
+        run: |
+          curl -fsSL https://get.docker.com -o get-docker.sh
+          sudo sh get-docker.sh
+          dockerd-rootless-setuptool.sh install
       - name: Install Buildkite agent
         run: |
           curl -fsSL https://keys.openpgp.org/vks/v1/by-fingerprint/32A37959C2FA5C3C99EFBC32A79206696452D198 | sudo gpg --dearmor -o /usr/share/keyrings/buildkite-agent-archive-keyring.gpg
@@ -32,10 +37,6 @@ jobs:
           export PATH="${{ steps.install-ruby.outputs.ruby-prefix }}/bin:$PATH"
           EOF
           sudo chmod +x /etc/buildkite-agent/hooks/environment
-      - name: grant buildkite agent access to docker
-        run: |
-          sudo usermod -aG docker buildkite-agent
-          chmod 666 /var/run/docker.sock
 
       - name: Sleep
         run: sleep 60
