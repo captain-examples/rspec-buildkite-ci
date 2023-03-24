@@ -1,4 +1,8 @@
 steps:
+  - name: ":docker:?"
+    command: |
+      whoami
+      docker run hello-world
   - name: ":rspec:"
     command: docker-compose run --rm app bash -c "bundle exec rspec"
 
