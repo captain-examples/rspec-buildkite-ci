@@ -1,6 +1,7 @@
 steps:
   - name: ":rspec:"
-    command: "rspec --color specs"
-    plugins:
-      docker-compose#v4.11.0:
-        run: app
+    command: docker-compose run --rm app bash -c "bundle exec rspec"
+
+    # plugins:
+    #   docker-compose#v4.11.0:
+    #     run: app
