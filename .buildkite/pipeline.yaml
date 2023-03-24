@@ -1,11 +1,6 @@
 steps:
-  - name: ":docker:?"
-    command: |
-      whoami
-      docker run hello-world
   - name: ":rspec:"
-    command: docker-compose run --rm app sh -c "bundle exec rspec"
-
-    # plugins:
-    #   docker-compose#v4.11.0:
-    #     run: app
+    command: bundle exec rspec
+    plugins:
+      docker-compose#v4.11.0:
+        run: app
