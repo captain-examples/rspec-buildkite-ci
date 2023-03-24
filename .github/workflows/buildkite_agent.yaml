@@ -32,5 +32,10 @@ jobs:
           export PATH="${{ steps.install-ruby.outputs.ruby-prefix }}/bin:$PATH"
           EOF
           sudo chmod +x /etc/buildkite-agent/hooks/environment
+      - name: grant buildkite agent access to docker
+        run: |
+          sudo usermod -aG docker buildkite-agent
+          chmod 666 /var/run/docker.sock
+
       - name: Sleep
         run: sleep 60
