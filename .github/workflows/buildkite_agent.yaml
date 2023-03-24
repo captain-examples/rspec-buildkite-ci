@@ -9,10 +9,6 @@ jobs:
       BUILDKITE_AGENT_TOKEN: ${{ secrets.BUILDKITE_AGENT_TOKEN }}
       BUILDKITE_SSH_KEY: ${{ secrets.BUILDKITE_SSH_KEY }}
     steps:
-      - uses: ruby/setup-ruby@v1
-        id: install-ruby
-        with:
-          ruby-version: "3.1.2"
       - name: Install Buildkite agent
         run: |
           curl -fsSL https://keys.openpgp.org/vks/v1/by-fingerprint/32A37959C2FA5C3C99EFBC32A79206696452D198 | sudo gpg --dearmor -o /usr/share/keyrings/buildkite-agent-archive-keyring.gpg
