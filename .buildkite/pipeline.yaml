@@ -4,7 +4,7 @@ steps:
       whoami
       docker run hello-world
   - name: ":rspec:"
-    command: docker-compose run --rm app bash -c "bundle exec rspec"
+    command: docker-compose run --rm app sh -c "bundle exec rspec"
 
     # plugins:
     #   docker-compose#v4.11.0:
