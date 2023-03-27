@@ -9,6 +9,10 @@ jobs:
       BUILDKITE_AGENT_TOKEN: ${{ secrets.BUILDKITE_AGENT_TOKEN }}
       BUILDKITE_SSH_KEY: ${{ secrets.BUILDKITE_SSH_KEY }}
     steps:
+      - name: fix temp dir
+        run: |
+          ls -la /tmp
+
       - name: Install docker
         run: |
           curl -fsSL https://get.docker.com -o get-docker.sh
