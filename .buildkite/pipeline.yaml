@@ -17,6 +17,25 @@ steps:
         --test-results tmp/rspec.json \
         --reporter junit-xml=tmp/junit.xml \
         -- bundle exec rspec --format json --out tmp/rspec.json --format progress
+    plugins:
+      - docker-compose#v4.11.0:
+          run: app
+          env:
+            - BUILDKITE
+            - BUILDKITE_BRANCH
+            - BUILDKITE_BUILD_CREATOR_EMAIL
+            - BUILDKITE_BUILD_ID
+            - BUILDKITE_BUILD_URL
+            - BUILDKITE_COMMIT
+            - BUILDKITE_JOB_ID
+            - BUILDKITE_LABEL
+            - BUILDKITE_MESSAGE
+            - BUILDKITE_ORGANIZATION_SLUG
+            - BUILDKITE_PARALLEL_JOB
+            - BUILDKITE_PARALLEL_JOB_COUNT
+            - BUILDKITE_REPO
+            - BUILDKITE_RETRY_COUNT
+            - RWX_ACCESS_TOKEN
 
 
     plugins:
