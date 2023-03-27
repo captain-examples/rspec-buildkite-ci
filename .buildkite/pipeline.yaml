@@ -31,13 +31,53 @@ steps:
             - BUILDKITE_LABEL
             - BUILDKITE_MESSAGE
             - BUILDKITE_ORGANIZATION_SLUG
+            - BUILDKITE_REPO
+            - BUILDKITE_RETRY_COUNT
+            - RWX_ACCESS_TOKEN
+
+  - name: ":rspec: with partitioning"
+    parallelism: 2
+    command: |
+      # download & install captain
+      arch=x86_64 # Supported values are x86_64 or aarch64
+      os=linux    # Supported values are linux or darwin
+
+      tmp="$$(mktemp -d)/captain" &&
+        wget -qO "$$tmp" "https://releases.captain.build/v1/$$os/$$arch/captain" &&
+        install "$$tmp" /usr/local/bin &&
+        rm "$$tmp" &&
+        captain --version
+
+      export CAPTAIN_SUITE_ID="captain-examples-rspec-partitioning"
+
+      test_files=$$(
+        captain partition \
+        --index $$BUILDKITE_PARALLEL_JOB \
+        --total $$BUILDKITE_PARALLEL_JOB_COUNT \
+        "spec/**/*_spec.rb"
+      )
+
+      captain run \
+        --test-results tmp/rspec.json \
+        --reporter junit-xml=tmp/junit.xml \
+        -- bundle exec rspec --format json --out tmp/rspec.json --format progress $$test_files
+
+    plugins:
+      - docker-compose#v4.11.0:
+          run: app
+          env:
+            - BUILDKITE
+            - BUILDKITE_BRANCH
+            - BUILDKITE_BUILD_CREATOR_EMAIL
+            - BUILDKITE_BUILD_ID
+            - BUILDKITE_BUILD_URL
+            - BUILDKITE_COMMIT
+            - BUILDKITE_JOB_ID
+            - BUILDKITE_LABEL
+            - BUILDKITE_MESSAGE
+            - BUILDKITE_ORGANIZATION_SLUG
             - BUILDKITE_PARALLEL_JOB
             - BUILDKITE_PARALLEL_JOB_COUNT
             - BUILDKITE_REPO
             - BUILDKITE_RETRY_COUNT
             - RWX_ACCESS_TOKEN
-
-
-    plugins:
-      docker-compose#v4.11.0:
-        run: app
