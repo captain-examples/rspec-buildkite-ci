@@ -4,7 +4,9 @@ steps:
       pwd
       ls -la
       ls -la .buildkite/**
-      which bash
+
+      which sh
+
       .buildkite/steps/rspec.sh
 
     plugins:
