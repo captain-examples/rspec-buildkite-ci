@@ -50,8 +50,6 @@ steps:
         rm "$$tmp" &&
         captain --version
 
-      env
-
       test_files=$$(
         captain partition \
         --index $$BUILDKITE_PARALLEL_JOB \
