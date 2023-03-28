@@ -31,6 +31,8 @@ steps:
             - BUILDKITE_LABEL
             - BUILDKITE_MESSAGE
             - BUILDKITE_ORGANIZATION_SLUG
+            - BUILDKITE_PARALLEL_JOB
+            - BUILDKITE_PARALLEL_JOB_COUNT
             - BUILDKITE_REPO
             - BUILDKITE_RETRY_COUNT
             - RWX_ACCESS_TOKEN
