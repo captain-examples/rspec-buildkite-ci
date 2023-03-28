@@ -48,8 +48,6 @@ steps:
         rm "$$tmp" &&
         captain --version
 
-      export CAPTAIN_SUITE_ID="captain-examples-rspec-partitioning"
-
       test_files=$$(
         captain partition \
         --index $$BUILDKITE_PARALLEL_JOB \
@@ -66,6 +64,7 @@ steps:
       - docker-compose#v4.11.0:
           run: app
           env:
+            - CAPTAIN_SUITE_ID: rspec
             - BUILDKITE
             - BUILDKITE_BRANCH
             - BUILDKITE_BUILD_CREATOR_EMAIL
