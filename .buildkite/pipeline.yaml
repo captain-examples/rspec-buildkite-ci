@@ -50,6 +50,8 @@ steps:
         rm "$$tmp" &&
         captain --version
 
+      env
+
       test_files=$$(
         captain partition \
         --index $$BUILDKITE_PARALLEL_JOB \
@@ -66,7 +68,6 @@ steps:
       - docker-compose#v4.11.0:
           run: app
           env:
-            - CAPTAIN_SUITE_ID: rspec
             - BUILDKITE
             - BUILDKITE_BRANCH
             - BUILDKITE_BUILD_CREATOR_EMAIL
@@ -82,3 +83,4 @@ steps:
             - BUILDKITE_REPO
             - BUILDKITE_RETRY_COUNT
             - RWX_ACCESS_TOKEN
+            - CAPTAIN_SUITE_ID=rspec
