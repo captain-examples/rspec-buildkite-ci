@@ -48,8 +48,6 @@ steps:
 
       test_files=$$(
         captain partition \
-        --index $$BUILDKITE_PARALLEL_JOB \
-        --total $$BUILDKITE_PARALLEL_JOB_COUNT \
         "spec/**/*_spec.rb"
       )
 
