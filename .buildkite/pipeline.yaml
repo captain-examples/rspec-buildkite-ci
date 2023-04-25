@@ -46,12 +46,7 @@ steps:
         rm "$$tmp" &&
         captain --version
 
-      test_files=$$(
-        captain partition \
-        "spec/**/*_spec.rb"
-      )
-
-      captain run -- $$test_files
+      captain run
 
     plugins:
       - docker-compose#v4.11.0:
