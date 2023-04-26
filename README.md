@@ -1,3 +1,3 @@
-# RSpec-Circle CI example
+# RSpec-Buildkite CI example
 
-see [.circleci/config.yml](.circleci/config.yml) for the Circle CI configuration!
+see [.buildkite/pipeline.yaml](.buildkite/pipeline.yaml) for the Buildkite configuration!
